@@ -1,10 +1,9 @@
-#include <signal.h>
-#include <stdio.h>
-#include <unistd.h>
+#include "minitalk.h"
 
 void handler()
 {
-	printf("Signal received\n");
+	ft_printf("\U0001F60A\n");
+	ft_printf("\U0000267B\n");
 }
 int main()
 {
@@ -12,6 +11,9 @@ int main()
 	int pid;
 	pid = getpid();
 	sa_signal.sa_sigaction = handler;
-	printf("PID is : %d\n", pid);
+	ft_printf("PID is : %d\n", pid);
 	sigaction(SIGUSR1, &sa_signal, NULL);
+	//while (1)
+		pause();
+	
 }
