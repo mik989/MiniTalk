@@ -1,39 +1,64 @@
 #include "minitalk.h"
 
+static volatile int control = -1;
+
+void handler(int signal, siginfo_t *info, void *cazzo)
+{
+	(void) info;
+	(void) cazzo;
+	if (signal == SIGUSR1)
+		control = 1;
+	else
+		control = 0;
+}
+
 int main(int ac, char **av)
 {
+	struct sigaction	sa_signal;
+	sigset_t			mask;
+	int pid;
+
+	sigemptyset(&mask);
+	sigaddset(&mask, SIGINT);
+	sigaddset(&mask, SIGQUIT);
+	sa_signal.sa_flags = SA_SIGINFO;
+	sa_signal.sa_mask = mask;
+	sa_signal.sa_handler = 0;
+	sa_signal.sa_sigaction = handler;
+	sigaction(SIGUSR1, &sa_signal, NULL);
+	sigaction(SIGUSR2, &sa_signal, NULL);
+
 	int i;
 	int k;
-	char c;
+	int pidC = getpid();
 
 	i = 0;
 	if (ac == 3)
 	{
-		int pid;
+		ft_printf("My PID is : %d\n", pidC);
 		pid = ft_atoi(av[1]);
 		while (av[2][i])
 		{
 			k = 8;
 			while(k--)
-			{
-				c = (av[2][i] >> k) & 1;
-				if(c)
+			{				
+				if ((av[2][i] >> k) & 1)
 				{
-					kill(pid, SIGUSR1);
-					sleep(1);
+					kill(pid, SIGUSR1);				
 				}
 				else
 				{
-					kill(pid, SIGUSR2);
-					sleep(1);
+					kill(pid, SIGUSR2);				
 				}
+				//trigger = 0;
+				//if(c != control)
+					usleep(3);	
 			}
 			i++;
 		}
-		
-		//kill(pid, SIGUSR1);
-		//kill(pid, SIGUSR1);
-		//kill(pid, SIGUSR1);
+
+	while (1)
+		pause();
 	}
 	else
 	{
