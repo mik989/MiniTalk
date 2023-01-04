@@ -11,16 +11,14 @@ void handler(int signal, siginfo_t *info, void *cazzo)
 		write(1, "\n", 1);				
 		ft_printf("kill USR1 is : %d\n", kill(signalPid, SIGUSR1));
 		ft_printf("signalPid USR1 is : %d\n", signalPid);
-		pause();
 		
 	}
-	else 
+	else if (signal == SIGUSR2)
 	{
 		write(1, "0", 1);
 		write(1, "\n", 1);		
 		ft_printf("kill USR2 is : %d\n", kill(signalPid, SIGUSR2));
-		ft_printf("signalPid USR2 is : %d\n", signalPid);
-		pause();	
+		ft_printf("signalPid USR2 is : %d\n", signalPid);	
 	}
 
 }

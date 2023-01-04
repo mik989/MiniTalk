@@ -8,7 +8,7 @@ void handler(int signal, siginfo_t *info, void *cazzo)
 	(void) cazzo;
 	if (signal == SIGUSR1)
 		control = 1;
-	else
+	else if (signal == SIGUSR2)
 		control = 0;
 }
 
@@ -31,6 +31,8 @@ int main(int ac, char **av)
 	int i;
 	int k;
 	int pidC = getpid();
+	int trigger = 1;
+	int c = 0;
 
 	i = 0;
 	if (ac == 3)
@@ -40,19 +42,20 @@ int main(int ac, char **av)
 		while (av[2][i])
 		{
 			k = 8;
-			while(k--)
-			{				
-				if ((av[2][i] >> k) & 1)
-				{
-					kill(pid, SIGUSR1);				
-				}
-				else
-				{
-					kill(pid, SIGUSR2);				
-				}
-				//trigger = 0;
-				//if(c != control)
-					usleep(3);	
+			while((k-- && c == control) || trigger == 1)
+			{
+				c = (av[2][i] >> k) & 1;	
+					if (c)
+					{
+						
+						kill(pid, SIGUSR1);				
+					}
+					else
+					{	
+						kill(pid, SIGUSR2);			
+					}
+				usleep(3);
+				trigger = 0;				
 			}
 			i++;
 		}
