@@ -1,36 +1,30 @@
 #include "minitalk.h"
 
-void handler(int signal, siginfo_t *info, void *cazzo)
+void	handler(int signal, siginfo_t *info, void *cazzo)
 {
+	static char	c = 0;
+	static int	bit = 7;
+
 	(void) info;
 	(void) cazzo;
-	static char c = 0;
-	static int bit = 7;
-	//usleep(3);
 	if (signal == SIGUSR1)
-	{
 		c = (c << 1) | 1;
-	}
 	else if (signal == SIGUSR2)
-	{
 		c = (c << 1) | 0;
-	}
-	if(bit-- == 0)
+	if (bit-- == 0)
 	{
 		bit = 7;
 		write(1, &c, 1);
 		c = 0;
 	}
-	
 	kill(info->si_pid, SIGUSR1);
-	//usleep(3);
-
 }
-int main()
+
+int	main(void)
 {
 	struct sigaction	sa_signal;
 	sigset_t			mask;
-	int pid;
+	int					pid;
 
 	sigemptyset(&mask);
 	sigaddset(&mask, SIGINT);
@@ -45,5 +39,4 @@ int main()
 	sigaction(SIGUSR2, &sa_signal, NULL);
 	while (1)
 		pause();
-	
 }

@@ -27,12 +27,13 @@ char	*ft_strdup(const char *s1)
 	ft_memcpy(s2, s1, len);
 	return (s2);
 }
-void send(int pid, char *str)
+
+void	send(int pid, char *str)
 {
-	char c;
-	static int k = 8;
-	static int s_pid = 0;
-	static char *s_str;
+	char		c;
+	static int	k = 8;
+	static int	s_pid = 0;
+	static char	*s_str;
 
 	if (pid)
 		s_pid = pid;
@@ -46,24 +47,17 @@ void send(int pid, char *str)
 	if (k--)
 	{	
 		c = (*s_str >> k) & 1;
-		if(c)
-		{
+		if (c)
 			kill(s_pid, SIGUSR1);
-		}
 		else
-		{
 			kill(s_pid, SIGUSR2);
-		}
-		//return;
-		//usleep(3);
-		//pause();
 	}
 	if (k == 0)
 	{
 		s_str++;
 		k = 8;
 	}
-	return;
+	return ;
 }
 
 void	handler(int sign)
@@ -78,43 +72,18 @@ void	handler(int sign)
 	}
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
-	//int i;
-	//int k;
-	//char c;
+	int	pid;
 
-//	i = 0;
 	if (ac == 3)
 	{
-		int pid;
 		pid = ft_atoi(av[1]);
-		/*while (av[2][i])
-		{
-			k = 8;
-			while(k--)
-			{
-				c = (av[2][i] >> k) & 1;
-				if(c)
-				{
-					kill(pid, SIGUSR1);
-				}
-				else
-				{
-					kill(pid, SIGUSR2);
-				}
-				usleep(3);
-			}
-			i++;
-		}*/
 		signal(SIGUSR1, handler);
 		signal(SIGUSR2, handler);
 		send(pid, av[2]);
 		while (1)
-		{
 			pause();
-		}
-		
 	}
 	else
 	{
