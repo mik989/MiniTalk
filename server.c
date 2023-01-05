@@ -1,5 +1,14 @@
 #include "minitalk.h"
 
+char	*print_string(char *message)
+{
+	if (*message)
+		{ft_putstr_fd(message, 1);
+		free(message);}
+	ft_printf("\n Message received 😀\n");
+	return (NULL);
+}
+
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
 	size_t	i;
@@ -34,7 +43,6 @@ char	*join_char(char c, char *str)
 	char *joint;
 
 	i = 0;
-	//i = ft_strlen(str);
 	if (!*str && c)
 	{
 		joint = malloc(sizeof(char) * 2);
@@ -75,12 +83,9 @@ void	handler(int signal, siginfo_t *info, void *cazzo)
 			text = join_char(c, text);
 		else
 		{
-			ft_printf("%s\n", text);
-			free(text);
+			print_string(text);
 			text = "\0";
-			ft_printf("\U0001F601 \n");
 		}
-		//write(1, &c, 1);
 		c = 0;
 	}
 	kill(info->si_pid, SIGUSR1);
