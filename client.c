@@ -27,34 +27,49 @@ char	*ft_strdup(const char *s1)
 	ft_memcpy(s2, s1, len);
 	return (s2);
 }
-
+int	send_null(int pid)
+{
+	static int	k = 8;
+	if(k-- != 0)
+	{
+		kill(pid, SIGUSR2);
+		return(1);
+	}
+	return(0);
+		
+}
 void	send(int pid, char *str)
 {
 	char		c;
 	static int	k = 8;
 	static int	s_pid = 0;
 	static char	*s_str;
+	static int	i = 0;
 
 	if (pid)
 		s_pid = pid;
 	if (str)
 		s_str = ft_strdup(str);
-	if (!*s_str)
+	if (!s_str[i])
 	{
+		if (send_null(s_pid) == 0)
+		{
 		free(s_str);
+		ft_printf("Message sent\n");
 		exit(0);
+		}
 	}
-	if (k--)
+	if (k-- && s_str[i])
 	{	
-		c = (*s_str >> k) & 1;
+		c = (s_str[i] >> k) & 1;
 		if (c)
 			kill(s_pid, SIGUSR1);
 		else
 			kill(s_pid, SIGUSR2);
 	}
-	if (k == 0)
+	if (k == 0 && s_str[i])
 	{
-		s_str++;
+		i++;
 		k = 8;
 	}
 	return ;
