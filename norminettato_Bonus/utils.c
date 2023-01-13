@@ -39,3 +39,10 @@ int	send_null(int pid)
 	}
 	return (0);
 }
+
+void ft_init(t_client *i)
+{
+	i->k = 8;
+	i->s_pid = 0;
+	i->i = 0;
+}

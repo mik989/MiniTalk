@@ -5,7 +5,7 @@
 # include <signal.h>
 # include <stdlib.h>
 
-typedef struct s_client
+typedef struct s_client 
 {
     char		c;
 	int k;
@@ -17,6 +17,7 @@ typedef struct s_client
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 char	*ft_strdup(const char *s1);
 int	send_null(int pid);
+void ft_init(t_client *i);
 
 
 #endif
