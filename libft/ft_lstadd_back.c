@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ocastell <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mgirardi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/12 14:43:10 by ocastell          #+#    #+#             */
-/*   Updated: 2022/10/12 14:43:31 by ocastell         ###   ########.fr       */
+/*   Created: 2022/10/12 17:55:37 by mgirardi          #+#    #+#             */
+/*   Updated: 2022/10/12 17:55:39 by mgirardi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	t_list	*last;
+	t_list	*tmp;
 
 	if (lst)
 	{
@@ -21,8 +22,8 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 			*lst = new;
 		else
 		{
-			last = ft_lstlast(*lst);
-			last->next = new;
+			tmp = ft_lstlast(*lst);
+			tmp->next = new;
 		}
 	}
 }

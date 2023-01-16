@@ -3,31 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ocastell <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mgirardi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/12 10:56:22 by ocastell          #+#    #+#             */
-/*   Updated: 2022/09/12 11:07:27 by ocastell         ###   ########.fr       */
+/*   Created: 2022/10/11 16:24:30 by mgirardi          #+#    #+#             */
+/*   Updated: 2022/10/11 17:48:16 by mgirardi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
-int	ft_strncmp(char *s1, const char *s2, size_t n)
+int	ft_strncmp(const char *p1, const char *p2, size_t n)
 {
+	unsigned char	*s1;
+	unsigned char	*s2;
 	size_t			i;
-	unsigned char	*p1;
-	unsigned char	*p2;
 
-	p1 = (unsigned char *)s1;
-	p2 = (unsigned char *)s2;
+	s2 = (unsigned char *)p2;
+	s1 = (unsigned char *)p1;
 	i = 0;
-	while ((p1[i] != '\0' || p2[i] != '\0') && (i < n))
+	while ((s1[i] != '\0' || s2[i] != '\0') && i < n)
 	{
-		if (p1[i] == p2[i])
-			i++;
-		else if (p1[i] > p2[i])
+		if (s1[i] > s2[i])
+		{
 			return (1);
-		else if (p1[i] < p2[i])
+		}
+		else if (s1[i] < s2[i])
+		{
 			return (-1);
+		}
+		i++;
 	}
 	return (0);
 }

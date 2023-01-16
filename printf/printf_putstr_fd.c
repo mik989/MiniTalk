@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_p.c                                       :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ocastell <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mgirardi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/19 12:15:52 by ocastell          #+#    #+#             */
-/*   Updated: 2022/10/19 12:15:55 by ocastell         ###   ########.fr       */
+/*   Created: 2022/10/12 17:53:09 by mgirardi          #+#    #+#             */
+/*   Updated: 2022/10/14 18:39:47 by mgirardi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-void	ft_print_p(uintptr_t nbr, int fd, int *count)
+int	printf_putstr_fd(char *s, int fd)
 {
-	if (!nbr)
-		ft_putstrs_fd("(nil)", fd, count);
-	else
+	int	i;
+
+	i = 0;
+	while (s[i] != '\0')
 	{
-		ft_putstrs_fd("0x", fd, count);
-		ft_putnbr_base_fd(nbr, fd, count);
+		printf_putchar_fd(s[i], fd);
+		i++;
 	}
+	if (i == 0)
+		return (0);
+	return (i);
 }

@@ -3,35 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ocastell <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mgirardi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/08 17:48:36 by ocastell          #+#    #+#             */
-/*   Updated: 2022/10/08 17:49:51 by ocastell         ###   ########.fr       */
+/*   Created: 2022/10/11 15:44:35 by mgirardi          #+#    #+#             */
+/*   Updated: 2022/10/11 20:43:08 by mgirardi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strrchr(const char *s, int c)
-{
-	char	*i;
+#include "libft.h"
 
-	i = 0;
-	while (*s)
-	{
-		if (*s == (unsigned char)c)
-			i = (char *)s;
-		s++;
-	}
-	if (i)
-		return (i);
-	if (c == '\0')
-		return ((char *)s);
-	return (0);
-}
-/*
-#include <stdio.h>
-int main()
+char	*ft_strrchr(const char *str, int ch)
 {
-	char a[] = "acd";
-	printf("%s ", ft_strrchr(a, 'b'));
+	char	*ptr;
+	int		i;
+
+	ptr = (char *)str;
+	i = ft_strlen(str);
+	while (ptr[i] != ch && i > 0)
+	{
+		i--;
+	}
+	if (ptr[i] == ch)
+		return (&ptr[i]);
+	else
+		return (NULL);
 }
-*/

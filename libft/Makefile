@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ocastell <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: mgirardi <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/10/08 11:29:44 by ocastell          #+#    #+#              #
-#    Updated: 2022/10/08 11:39:02 by ocastell         ###   ########.fr        #
+#    Created: 2022/10/11 17:36:57 by mgirardi          #+#    #+#              #
+#    Updated: 2022/10/11 17:37:02 by mgirardi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,17 +17,14 @@ AR = ar
 ARF = -rcs
 NAME = libft.a
 
-MAN = isalpha isdigit isalnum isascii isprint strlen memset bzero memcpy\
-		memmove strlcpy strlcat toupper tolower strchr strrchr strncmp memchr\
-		memcmp strnstr atoi calloc strdup substr strjoin strtrim split itoa\
-		strmapi striteri putchar_fd putstr_fd putendl_fd putnbr_fd\
-		printf print_p print_s putchars_fd putnbrs_fd putnbru_fd\
-		putnbr_X putstrs_fd putnbr_base_fd
+MAN = 	atoi bzero calloc isalnum isalpha isascii isdigit isprint itoa memchr memcmp memmove memcpy memset putchar_fd \
+		putendl_fd putnbr_fd putstr_fd split strchr strdup striteri strjoin strlcat strlcpy strlen strmapi strncmp \
+		strnstr strrchr strtrim substr tolower toupper
+
 MANFC = $(addprefix ft_,$(addsuffix .c, $(MAN)))
 MANO = $(MANFC:.c=.o)
 
-BON = lstnew lstadd_front lstsize lstlast lstadd_back lstdelone lstclear\
-		lstiter lstmap
+BON = lstnew lstadd_front lstsize lstlast lstadd_back lstdelone lstclear lstiter lstmap
 BONFC = $(addprefix ft_,$(addsuffix .c, $(BON)))
 BONO = $(BONFC:.c=.o)
 

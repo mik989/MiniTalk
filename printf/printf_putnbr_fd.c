@@ -3,27 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ocastell <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mgirardi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/11 11:54:38 by ocastell          #+#    #+#             */
-/*   Updated: 2022/10/11 11:55:05 by ocastell         ###   ########.fr       */
+/*   Created: 2022/10/12 17:53:41 by mgirardi          #+#    #+#             */
+/*   Updated: 2022/10/21 16:50:54 by mgirardi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-void	ft_putnbrs_fd(int nb, int fd, int *count)
+int	printf_putnbr_fd(int nb, int fd)
 {
-	unsigned int	n;
+	int	nbr;
+	int	n_char;
 
 	if (nb < 0)
 	{
-		ft_putchars_fd('-', fd, count);
-		n = (unsigned int)(nb * -1);
+		printf_putchar_fd('-', fd);
+		nbr = (unsigned int)(nb * -1);
+		n_char = 1;
 	}
 	else
-		n = (unsigned int)nb;
-	if (n >= 10)
-		ft_putnbrs_fd(n / 10, fd, count);
-	ft_putchars_fd((char)(n % 10 + 48), fd, count);
+	{
+		nbr = (unsigned int)nb;
+		n_char = 0;
+	}
+	n_char += ft_putnbr_baseu_fd(nbr, fd);
+	return (n_char);
 }

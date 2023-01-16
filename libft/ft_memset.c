@@ -3,38 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ocastell <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mgirardi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/04 11:57:40 by ocastell          #+#    #+#             */
-/*   Updated: 2022/10/08 15:04:47 by ocastell         ###   ########.fr       */
+/*   Created: 2022/10/11 11:12:15 by mgirardi          #+#    #+#             */
+/*   Updated: 2022/10/11 18:13:51 by mgirardi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 void	*ft_memset(void *s, int c, size_t n)
 {
-	size_t	i;
-	char	*pt;
+	unsigned char	*p;
+	size_t			i;
 
-	pt = (char *)s;
 	i = 0;
+	p = (unsigned char *)s;
 	while (i < n)
-	{	
-		pt[i] = c;
+	{
+		p[i] = (unsigned char)c;
 		i++;
 	}
 	return (s);
 }
-/*
-#include<stdio.h>
-#include<string.h>
-
-int main()
-{
-	char str[]="puzza di fogna";
-	unsigned int c = '$';
-	unsigned int n = 8;
-	ft_memset(str,c, n);
-	//memset(str, c, n);
-	printf("%s\n", str);
-}*/
