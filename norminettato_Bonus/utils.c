@@ -1,6 +1,6 @@
 #include "minitalk.h"
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+/*void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
 	size_t	i;
 
@@ -26,7 +26,7 @@ char	*ft_strdup(const char *s1)
 		return (0);
 	ft_memcpy(s2, s1, len);
 	return (s2);
-}
+}*/
 
 int	send_null(int pid)
 {
@@ -40,7 +40,7 @@ int	send_null(int pid)
 	return (0);
 }
 
-void ft_init(t_client *i)
+void	ft_init(t_client *i)
 {
 	i->k = 8;
 	i->s_pid = 0;

@@ -3,44 +3,18 @@
 char	*print_string(char *message)
 {
 	if (*message)
-		{ft_putstr_fd(message, 1);
-		free(message);}
+	{
+		ft_putstr_fd(message, 1);
+		free(message);
+	}
 	ft_printf("\n Message received 😀\n");
 	return (NULL);
 }
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
-{
-	size_t	i;
-
-	if (!dst && !src)
-		return (0);
-	i = 0;
-	while (i < n)
-	{
-		((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
-		i++;
-	}
-	return (dst);
-}
-
-char	*ft_strdup(const char *s1)
-{
-	char		*s2;
-	size_t		len;
-
-	len = ft_strlen(s1) + 1;
-	s2 = malloc(len);
-	if (!s2)
-		return (0);
-	ft_memcpy(s2, s1, len);
-	return (s2);
-}
-
 char	*join_char(char c, char *str)
 {
-	int	i;
-	char *joint;
+	int		i;
+	char	*joint;
 
 	i = 0;
 	if (!*str && c)
@@ -61,8 +35,7 @@ char	*join_char(char c, char *str)
 	}
 	else
 		return (NULL);
-	
-	return (joint);	
+	return (joint);
 }
 
 void	handler(int signal, siginfo_t *info, void *cazzo)
