@@ -1,7 +1,5 @@
 {
-	"files.associations": {
-		"signal.h": "c",
-		"unistd.h": "c",
-		"minitalk.h": "c"
-	}
+    "files.associations": {
+        "stdint.h": "c"
+    }
 }

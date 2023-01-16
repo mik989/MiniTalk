@@ -1,76 +1,41 @@
 #include "minitalk.h"
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
-{
-	size_t	i;
+t_client	*g_client;
 
-	if (!dst && !src)
-		return (0);
-	i = 0;
-	while (i < n)
-	{
-		((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
-		i++;
-	}
-	return (dst);
+void	send_print(t_client *g_client)
+{
+	free(g_client->s_str);
+	free(g_client);
+	ft_printf("Message sent\n");
+	exit(0);
 }
 
-char	*ft_strdup(const char *s1)
+void	ft_send_signals(t_client *g_client)
 {
-	char		*s2;
-	size_t		len;
-
-	len = ft_strlen(s1) + 1;
-	s2 = malloc(len);
-	if (!s2)
-		return (0);
-	ft_memcpy(s2, s1, len);
-	return (s2);
+	g_client->c = (g_client->s_str[g_client->i] >> g_client->k) & 1;
+	if (g_client->c)
+		kill(g_client->s_pid, SIGUSR1);
+	else
+		kill(g_client->s_pid, SIGUSR2);
 }
-int	send_null(int pid)
-{
-	static int	k = 8;
-	if(k-- != 0)
-	{
-		kill(pid, SIGUSR2);
-		return(1);
-	}
-	return(0);
-		
-}
-void	send(int pid, char *str)
-{
-	char		c;
-	static int	k = 8;
-	static int	s_pid = 0;
-	static char	*s_str;
-	static int	i = 0;
 
+void	send(int pid, char *str, t_client *g_client)
+{
 	if (pid)
-		s_pid = pid;
+		g_client->s_pid = pid;
 	if (str)
-		s_str = ft_strdup(str);
-	if (!s_str[i])
+		g_client->s_str = ft_strdup(str);
+	if (!g_client->s_str[g_client->i])
 	{
-		if (send_null(s_pid) == 0)
-		{
-		free(s_str);
-		ft_printf("Message sent\n");
-		exit(0);
-		}
+		if (send_null(g_client->s_pid) == 0)
+			send_print(g_client);
 	}
-	if (k-- && s_str[i])
-	{	
-		c = (s_str[i] >> k) & 1;
-		if (c)
-			kill(s_pid, SIGUSR1);
-		else
-			kill(s_pid, SIGUSR2);
-	}
-	if (k == 0 && s_str[i])
+	if (g_client->k-- && g_client->s_str[g_client->i])
+		ft_send_signals(g_client);
+	if (g_client->k == 0 && g_client->s_str[g_client->i])
 	{
-		i++;
-		k = 8;
+		g_client->i++;
+		g_client->k = 8;
 	}
 	return ;
 }
@@ -79,7 +44,7 @@ void	handler(int sign)
 {
 	if (sign == SIGUSR1)
 	{
-		send(0, 0);
+		send(0, 0, g_client);
 	}
 	else if (sign == SIGUSR2)
 	{
@@ -91,12 +56,14 @@ int	main(int ac, char **av)
 {
 	int	pid;
 
+	g_client = malloc(sizeof(t_client));
 	if (ac == 3)
 	{
 		pid = ft_atoi(av[1]);
+		ft_init(g_client);
 		signal(SIGUSR1, handler);
 		signal(SIGUSR2, handler);
-		send(pid, av[2]);
+		send(pid, av[2], g_client);
 		while (1)
 			pause();
 	}
